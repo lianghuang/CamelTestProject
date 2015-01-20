@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:broker="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+         http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<!-- let Spring do its IoC stuff in this package -->
+	<context:component-scan base-package="com.test.bcop" />
+
+	<!-- spring property placeholder, ignore resource not found as the file 
+		resource is for unit testing -->
+	<context:property-placeholder location="classpath:camel.properties"
+		ignore-resource-not-found="true" />
+
+	<!-- using the camel template ,please use the producerTemplate to send message -->
+	<camel:camelContext id="camel">
+
+		<!-- declare a camel context that scans for classes that is RouteBuilder 
+			in the package -->
+		<camel:package>com.test.bcop.jms</camel:package>
+		<camel:jmxAgent id="agent" disabled="true" />
+		<camel:template id="producerTemplate" />
+	</camel:camelContext>
+
+	<!-- creates an activemq connection factory using the broker namespace -->
+	<broker:connectionFactory id="amqConnectionFactory"
+		brokerURL="${jms.url}" useAsyncSend="true" />
+	<!-- CachingConnectionFactory Definition, sessionCacheSize property is the 
+		number of sessions to cache -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<constructor-arg ref="amqConnectionFactory" />
+		<!-- <property name="exceptionListener" ref="jmsExceptionListener" /> -->
+		<property name="sessionCacheSize" value="100" />
+	</bean>
+	<!-- lets configure the Camel ActiveMQ to use the embedded ActiveMQ broker 
+		declared above -->
+	<bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
+	<!-- END SNIPPET: e5 -->
+
+</beans>
