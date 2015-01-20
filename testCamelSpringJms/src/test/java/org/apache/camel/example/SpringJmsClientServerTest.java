@@ -44,7 +44,7 @@ public class SpringJmsClientServerTest extends CamelSpringTestSupport {
         fos.write(bank1.getBytes());
         fos.close();
     }
-
+    //test 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext("spring/camel-server.xml");
