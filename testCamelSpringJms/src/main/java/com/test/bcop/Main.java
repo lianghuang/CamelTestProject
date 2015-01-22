@@ -14,7 +14,6 @@ package com.test.bcop;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.test.bcop.client.OrderBSClient;
 import com.test.bcop.client.OrderVmClient;
 
 /**
@@ -30,10 +29,10 @@ public class Main {
         // TODO Auto-generated method stub
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("spring/jmsconfig.xml");
         OrderVmClient orderVm=(OrderVmClient) context.getBean("orderVm");
-        orderVm.ordervm();
-        OrderBSClient orderBs=(OrderBSClient) context.getBean("orderBs");
-        orderBs.ordervm();
-        orderVm.ordervm();
+        for(int i=0;i<10;i++){
+            orderVm.ordervm();
+        }
+
     }
 
 }

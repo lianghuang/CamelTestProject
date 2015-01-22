@@ -21,9 +21,15 @@
 
 		<!-- declare a camel context that scans for classes that is RouteBuilder 
 			in the package -->
-		<camel:package>com.test.bcop.jms</camel:package>
+		<!-- <camel:package>com.test.bcop.jms</camel:package> -->
 		<camel:jmxAgent id="agent" disabled="true" />
 		<camel:template id="producerTemplate" />
+		<camel:endpoint id="endpoint_order" uri="jms:queue:order" />
+		<camel:route>
+			<camel:from ref="endpoint_order" />
+			
+			<camel:to uri="bean:orderProcessor?method=orderProduct" />
+		</camel:route>
 	</camel:camelContext>
 
 	<!-- creates an activemq connection factory using the broker namespace -->
@@ -42,6 +48,5 @@
 	<bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
 		<property name="connectionFactory" ref="connectionFactory" />
 	</bean>
-	<!-- END SNIPPET: e5 -->
 
 </beans>

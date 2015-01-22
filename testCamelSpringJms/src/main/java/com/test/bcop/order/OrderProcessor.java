@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.test.bcop.model.VM;
+
 /**
  * @author Huang, Liangliang
  * 
@@ -24,8 +26,11 @@ public class OrderProcessor {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public String orderProduct(String param) {
-        log.info("begin process");
+    public String orderProduct(Object obj) {
+        VM vm=(VM) obj;
+        String param=vm.getNetwork().getRegion().get(0);
+        
+        log.info("begin process"+param);
         switch (param) {
         case "VM":
             log.info("order VM SUCCESS");
@@ -38,4 +43,10 @@ public class OrderProcessor {
         }
         return "success";
     }
+    
+    public String anotherMethod(String params){
+        log.info("execute anotherMethod");
+        return null;
+    }
+    
 }

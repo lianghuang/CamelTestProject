@@ -11,10 +11,15 @@
 
 package com.test.bcop.client;
 
-import org.apache.camel.ExchangePattern;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.stereotype.Service;
+
+import com.test.bcop.model.Network;
+import com.test.bcop.model.VM;
 
 /**
  * @author Huang, Liangliang
@@ -26,10 +31,19 @@ public class OrderVmClient {
     ProducerTemplate producerTemplate;
     
     public Object ordervm(){
-        Object response = producerTemplate.requestBody("VM");
+        VM vm=new VM();
+        vm.setId("111");
+        vm.setName("test");
+        Network network=new Network();
+        network.setId("n1");
+        List<String> region =new ArrayList<String>();
+        region.add("VM");
+        network.setRegion(region);
+        vm.setNetwork(network);
+        Object response = producerTemplate.requestBody(vm);
         if(response instanceof String){
             System.out.print("the response is:"+response);
         }
-        return null;
+        return vm;
     }
 }

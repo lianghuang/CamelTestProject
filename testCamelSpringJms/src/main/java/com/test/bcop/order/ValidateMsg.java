@@ -19,24 +19,17 @@ import org.springframework.stereotype.Service;
  * @author Huang, Liangliang
  * 
  */
-@Service("orderBSProcessor")
-public class OrderBSProcessor {
+@Service("validateMsg")
+public class ValidateMsg {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public String orderProduct(String param) {
-        log.info("begin process");
-        switch (param) {
-        case "VM":
-            log.info("order VM SUCCESS");
-            break;
-        case "BS":
-            log.info("order BS SUCCESS");
-            log.info("-------------------------------");
-            break;
-        default:
-            return "failed";
+    public Boolean validator(String msg){
+        log.info("begin validate msg");
+        if(msg.equals("VM")){
+            return true;
         }
-        return "success";
+        return false;
+        
     }
 }
