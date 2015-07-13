@@ -14,25 +14,18 @@ package com.test.bcop;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.test.bcop.client.OrderVmClient;
-
 /**
  * @author Huang, Liangliang
  *
  */
-public class Main {
+public class MessageReceiveMain {
 
     /**
      * @param args
      */
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        AbstractApplicationContext context = new ClassPathXmlApplicationContext("spring/jmsconfig.xml");
-        OrderVmClient orderVm=(OrderVmClient) context.getBean("orderVm");
-        for(int i=0;i<10;i++){
-            orderVm.ordervm();
-        }
-
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("spring/camel-server.xml");
     }
 
 }

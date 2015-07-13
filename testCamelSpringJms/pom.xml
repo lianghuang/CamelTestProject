@@ -54,7 +54,11 @@
 			<version>4.0</version>
 		</dependency>
 		<!-- END SNIPPET: e2 -->
-
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+			<version>${org.apache.camel.version}</version>
+		</dependency>
 		<!-- for logging using log4j.properties in src/main/resources -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

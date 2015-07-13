@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.test.bcop.model.Network;
@@ -27,7 +29,8 @@ import com.test.bcop.model.VM;
  */
 @Service("orderVm")
 public class OrderVmClient {
-    @Produce(uri = "jms:queue:order")
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    @Produce(uri = "direct:order")
     ProducerTemplate producerTemplate;
     
     public Object ordervm(){
@@ -40,10 +43,11 @@ public class OrderVmClient {
         region.add("VM");
         network.setRegion(region);
         vm.setNetwork(network);
-        Object response = producerTemplate.requestBody(vm);
-        if(response instanceof String){
-            System.out.print("the response is:"+response);
-        }
+        
+        producerTemplate.sendBody(vm);
+/*        if(response instanceof String){
+            log.info("the response is:"+response);
+        }*/
         return vm;
     }
 }
