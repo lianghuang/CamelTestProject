@@ -22,6 +22,9 @@
 			<camel:marshal>
 				<camel:json library="Jackson" />
 			</camel:marshal>
+            <setHeader headerName="messageId">
+         <groovy>java.util.UUID.randomUUID().toString()</groovy>
+            </setHeader>
 			<camel:to uri="jms:queue:order" />
 		</camel:route>
 	</camel:camelContext>

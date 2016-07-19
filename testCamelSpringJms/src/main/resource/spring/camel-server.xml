@@ -55,15 +55,24 @@
 	</bean>
 	<bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
 		<property name="connectionFactory" ref="pooledConnectionFactory" />
-		<property name="concurrentConsumers" value="10" />
+		<property name="concurrentConsumers" value="1" />
 		<property name="requestTimeout" value="60000" />
 	</bean>
-	<!-- lets configure the Camel ActiveMQ to use the embedded ActiveMQ broker 
+<!-- 	lets configure the Camel ActiveMQ to use the embedded ActiveMQ broker 
 		declared above -->
 	<bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
-		<!-- <property name="connectionFactory" ref="pooledConnectionFactory" /> -->
+		<property name="connectionFactory" ref="pooledConnectionFactory" />
 		<property name="configuration" ref="jmsConfig" />
 
 	</bean>
+  <!-- CachingConnectionFactory Definition, sessionCacheSize property is the number of sessions to cache -->
+<!--     <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="amqConnectionFactory" />
+        <property name="sessionCacheSize" value="100" />
+    </bean>
 
+    lets configure the Camel ActiveMQ to use the embedded ActiveMQ broker declared above
+    <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory" ref="connectionFactory" />
+    </bean> -->
 </beans>

@@ -31,7 +31,7 @@ public class OrderRoutes extends RouteBuilder {
     public void configure() throws Exception {
         // TODO Auto-generated method stub
         // from("jms:queue:order").beanRef("orderProcessor", "orderProduct");
-        from("direct:order").marshal().json(JsonLibrary.Jackson).to("jms:queue:order");
+        from("direct:order").marshal().json(JsonLibrary.Jackson).to("jms:queue:portal_to_console_resp_v4");
 
         from("jms:queue:order").unmarshal().json(JsonLibrary.Jackson, VM.class).to("bean:orderProcessor?method=orderProduct");
     }

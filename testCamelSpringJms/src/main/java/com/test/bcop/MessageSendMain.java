@@ -29,7 +29,7 @@ public class MessageSendMain {
         // TODO Auto-generated method stub
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("spring/camel-client.xml");
         OrderVmClient orderVm=(OrderVmClient) context.getBean("orderVm");
-        for(int i=0;i<1000;i++){
+        for(int i=0;i<100;i++){
             orderVm.ordervm();
         }
 
